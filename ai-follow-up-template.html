@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Free AI Follow-Up Checklist — Northern Tech Currents</title>
+  <meta name="description" content="Stop losing leads to slow follow-ups. Download the free AI Follow-Up Workflow Checklist and automate your first workflow today." />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* Landing page layout */
+    .lp-hero {
+      padding: 72px 5% 64px;
+      display: grid;
+      grid-template-columns: 1fr 460px;
+      gap: 64px;
+      align-items: center;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .lp-left { max-width: 560px; }
+
+    .lp-left h1 {
+      font-family: 'Sora', sans-serif;
+      font-size: clamp(1.9rem, 4vw, 2.9rem);
+      font-weight: 800;
+      line-height: 1.15;
+      color: var(--navy);
+      margin-bottom: 20px;
+    }
+
+    .lp-left h1 em {
+      font-style: normal;
+      color: var(--cyan);
+    }
+
+    .lp-left .lead {
+      font-size: 1.05rem;
+      color: var(--gray);
+      line-height: 1.7;
+      margin-bottom: 36px;
+    }
+
+    .proof-line {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: .88rem;
+      color: var(--gray);
+      margin-top: 20px;
+    }
+
+    .proof-dot {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--green);
+    }
+
+    /* What's inside */
+    .inside-section {
+      background: var(--white);
+      border-top: 1px solid var(--light);
+      border-bottom: 1px solid var(--light);
+      padding: 72px 5%;
+    }
+
+    .inside-inner {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+
+    .mock-checklist {
+      background: var(--bg);
+      border: 1.5px solid var(--light);
+      border-radius: 16px;
+      padding: 32px 28px;
+      box-shadow: var(--shadow);
+    }
+
+    .mock-checklist-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--light);
+    }
+
+    .mock-checklist-header .icon-box {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, var(--cyan), var(--blue));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+    }
+
+    .mock-checklist-header h4 {
+      font-family: 'Sora', sans-serif;
+      font-size: .9rem;
+      font-weight: 700;
+      color: var(--navy);
+    }
+
+    .mock-checklist-header span {
+      font-size: .75rem;
+      color: var(--gray);
+    }
+
+    .mock-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--light);
+    }
+
+    .mock-item:last-child { border-bottom: none; }
+
+    .mock-check {
+      width: 20px;
+      height: 20px;
+      min-width: 20px;
+      border-radius: 5px;
+      border: 2px solid var(--light);
+      margin-top: 2px;
+    }
+
+    .mock-check.done {
+      background: var(--green);
+      border-color: var(--green);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: .65rem;
+      font-weight: 900;
+    }
+
+    .mock-text {
+      font-size: .88rem;
+      color: var(--navy);
+      line-height: 1.45;
+    }
+
+    .mock-text.muted { color: var(--gray); }
+
+    /* Pain points */
+    .pain-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 36px;
+    }
+
+    .pain-chip {
+      background: rgba(3,105,161,.06);
+      border: 1px solid rgba(3,105,161,.12);
+      border-radius: 8px;
+      padding: 12px 16px;
+      font-size: .88rem;
+      color: var(--navy);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .pain-chip span { font-size: 1rem; }
+
+    /* Strategy call section */
+    .strategy-section {
+      padding: 80px 5%;
+      text-align: center;
+    }
+
+    .strategy-inner {
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    .strategy-card {
+      background: var(--white);
+      border: 1.5px solid var(--light);
+      border-radius: 16px;
+      padding: 48px 44px;
+      box-shadow: var(--shadow);
+      margin-top: 40px;
+    }
+
+    .strategy-card h3 {
+      font-family: 'Sora', sans-serif;
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--navy);
+      margin-bottom: 12px;
+    }
+
+    .strategy-card p {
+      color: var(--gray);
+      font-size: .97rem;
+      margin-bottom: 28px;
+      line-height: 1.65;
+    }
+
+    .strategy-cta-row {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    /* Thank-you state (hidden by default) */
+    #thank-you {
+      display: none;
+      text-align: center;
+      padding: 32px 0;
+    }
+
+    #thank-you .big-check {
+      font-size: 3rem;
+      margin-bottom: 16px;
+    }
+
+    #thank-you h3 {
+      font-family: 'Sora', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--navy);
+      margin-bottom: 10px;
+    }
+
+    #thank-you p {
+      color: var(--gray);
+      font-size: .95rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .lp-hero {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+      .lp-hero .form-card { max-width: 100%; }
+      .inside-inner { grid-template-columns: 1fr; }
+      .pain-grid { grid-template-columns: 1fr; }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .lp-left > * {
+      animation: fadeUp .55s ease both;
+    }
+    .lp-left > *:nth-child(1) { animation-delay: .05s; }
+    .lp-left > *:nth-child(2) { animation-delay: .15s; }
+    .lp-left > *:nth-child(3) { animation-delay: .25s; }
+    .lp-left > *:nth-child(4) { animation-delay: .35s; }
+    .lp-left > *:nth-child(5) { animation-delay: .45s; }
+
+    .form-card {
+      animation: fadeUp .6s .2s ease both;
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="NortherTechCurrents.png" alt="Northern Tech Currents" />
+    <div class="nav-logo-text">
+      Northern<span>Tech Currents</span>
+    </div>
+  </a>
+</nav>
+
+<!-- HERO + FORM -->
+<section style="background: var(--bg); padding-top: 0;">
+  <div class="lp-hero">
+
+    <!-- Left: Copy -->
+    <div class="lp-left">
+      <div class="hero-eyebrow">Free Download · No Credit Card</div>
+      <h1>Stop Losing Leads to <em>Slow Follow-Ups</em></h1>
+      <p class="lead">
+        If you're sending follow-up emails by hand — or worse, forgetting them entirely — 
+        you're leaving money on the table every single week. This free checklist shows you 
+        exactly how to automate it using AI, step by step.
+      </p>
+
+      <ul class="checklist">
+        <li>The 3-step follow-up framework that works for any small business</li>
+        <li>How to set up your first automated email in under an hour</li>
+        <li>Which free and low-cost AI tools actually deliver results</li>
+        <li>The single trigger that starts your entire follow-up sequence</li>
+        <li>A real-world example you can copy and customize today</li>
+      </ul>
+
+      <div class="proof-line">
+        <span class="proof-dot"></span>
+        Practical. Non-technical. Built for Main Street businesses.
+      </div>
+    </div>
+
+    <!-- Right: Form -->
+    <div class="form-card">
+      <div id="form-area">
+        <h2>Get the Free Checklist</h2>
+        <p>Enter your name and email and we'll send it straight to you.</p>
+
+        <!-- 
+          DEVELOPER NOTE:
+          Replace the action URL below with your Formspree endpoint:
+          https://formspree.io/f/YOUR_FORM_ID
+          Or connect to MailerLite / ConvertKit / Supabase as planned.
+        -->
+        <form id="signup-form" action="#" method="POST" onsubmit="handleSubmit(event)">
+          <div class="form-group">
+            <label for="fname">First Name</label>
+            <input type="text" id="fname" name="name" placeholder="Jane" required />
+          </div>
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" placeholder="jane@yourbusiness.com" required />
+          </div>
+          <button type="submit" class="btn-primary form-submit">Send Me the Checklist →</button>
+          <p class="form-note">🔒 No spam, ever. Unsubscribe anytime.</p>
+        </form>
+      </div>
+
+      <div id="thank-you">
+        <div class="big-check">✅</div>
+        <h3>You're all set!</h3>
+        <p>Check your inbox — your checklist is on the way.<br/>
+        While you wait, scroll down to see what's inside.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- WHAT'S INSIDE -->
+<section class="inside-section">
+  <div class="inside-inner">
+
+    <!-- Mock checklist visual -->
+    <div class="mock-checklist">
+      <div class="mock-checklist-header">
+        <div class="icon-box">📋</div>
+        <div>
+          <h4>AI Follow-Up Workflow Checklist</h4>
+          <span>Northern Tech Currents</span>
+        </div>
+      </div>
+
+      <div class="mock-item">
+        <div class="mock-check done">✓</div>
+        <div class="mock-text">Step 1 — Identify your highest-volume lead source</div>
+      </div>
+      <div class="mock-item">
+        <div class="mock-check done">✓</div>
+        <div class="mock-text">Step 2 — Write your personalized AI-assisted first response</div>
+      </div>
+      <div class="mock-item">
+        <div class="mock-check done">✓</div>
+        <div class="mock-text">Step 3 — Set the trigger that fires your automation</div>
+      </div>
+      <div class="mock-item">
+        <div class="mock-check"></div>
+        <div class="mock-text muted">Step 4 — Configure follow-up #2 for non-responders</div>
+      </div>
+      <div class="mock-item">
+        <div class="mock-check"></div>
+        <div class="mock-text muted">Step 5 — Track and measure your response rate</div>
+      </div>
+      <div class="mock-item">
+        <div class="mock-check"></div>
+        <div class="mock-text muted">Step 6 — Connect to your CRM or email platform</div>
+      </div>
+    </div>
+
+    <!-- Right: Pain points + copy -->
+    <div>
+      <div class="accent-bar"></div>
+      <p class="section-label">Sound Familiar?</p>
+      <h2 class="section-title">The follow-up problem is costing you more than you think.</h2>
+      <p class="section-sub" style="margin-bottom: 28px;">
+        Most small businesses lose 30–50% of potential customers simply because 
+        nobody followed up in time. This checklist fixes that — without hiring anyone.
+      </p>
+
+      <div class="pain-grid">
+        <div class="pain-chip"><span>😤</span> Manually sending the same emails over and over</div>
+        <div class="pain-chip"><span>📉</span> Leads going cold because life got in the way</div>
+        <div class="pain-chip"><span>⏰</span> Hours lost on tasks AI can handle in seconds</div>
+        <div class="pain-chip"><span>💸</span> Revenue slipping away between the cracks</div>
+      </div>
+
+      <a href="#top" class="btn-primary" onclick="document.getElementById('fname').focus(); return false;">
+        Get the Free Checklist Now →
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<!-- STRATEGY CALL (secondary CTA) -->
+<section class="strategy-section">
+  <div class="strategy-inner">
+    <div class="accent-bar" style="margin: 0 auto 16px;"></div>
+    <p class="section-label" style="text-align:center;">Want It Done For You?</p>
+    <h2 class="section-title" style="text-align:center;">Book a Free Strategy Call</h2>
+    <p class="section-sub" style="text-align:center; margin: 0 auto;">
+      If you'd like help setting up your first AI workflow — personalized to your 
+      actual business — book a free 30-minute strategy call. No pitch, no pressure.
+    </p>
+
+    <div class="strategy-card">
+      <h3>Is a strategy call right for you?</h3>
+      <p>
+        This call is for small business owners who've downloaded the checklist and want 
+        a second set of eyes on their workflow. We'll identify one high-impact automation 
+        and map out exactly how to implement it in your business.
+      </p>
+      <div class="strategy-cta-row">
+        <a href="#" class="btn-primary">Yes — Book My Call</a>
+        <a href="index.html" class="btn-secondary">Explore More Resources</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2025 Northern Tech Currents · <a href="mailto:hello@northerntechcurrents.net">hello@northerntechcurrents.net</a> · <a href="index.html">Home</a></p>
+</footer>
+
+<script>
+  function handleSubmit(e) {
+    e.preventDefault();
+    // Show thank-you state
+    document.getElementById('form-area').style.display = 'none';
+    document.getElementById('thank-you').style.display = 'block';
+    // TODO: Replace with actual form submission (Formspree, MailerLite, etc.)
+    // Example: fetch('https://formspree.io/f/YOUR_ID', { method:'POST', body: new FormData(e.target) })
+  }
+</script>
+
+</body>
+</html>
