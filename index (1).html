@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Northern Tech Currents | AI Training and Workflow Consulting</title>
+  <meta name="description" content="AI implementation, workflow automation, and custom AI tools for businesses and schools across northern Michigan. Mike Ehinger, AI trainer and educator." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;700&family=Space+Grotesk:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue:    #1a7fff;
+      --cyan:    #00c6ff;
+      --green:   #7ed321;
+      --dark:    #050b14;
+      --dark2:   #0a1628;
+      --dark3:   #0f2040;
+      --text:    #e8f0fe;
+      --muted:   #8aa8cc;
+      --border:  rgba(0,198,255,0.15);
+      --grad:    linear-gradient(135deg, var(--blue), var(--cyan), var(--green));
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      background: var(--dark);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* --- NOISE TEXTURE --- */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.4;
+    }
+
+    /* --- NAV --- */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 4rem;
+      background: rgba(5,11,20,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo img {
+      height: 48px;
+      display: block;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--cyan); }
+
+    .nav-cta {
+      background: transparent;
+      border: 1px solid var(--cyan);
+      color: var(--cyan);
+      padding: 0.5rem 1.4rem;
+      border-radius: 4px;
+      font-family: inherit;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: background 0.2s, color 0.2s;
+      cursor: pointer;
+    }
+
+    .nav-cta:hover { background: var(--cyan); color: var(--dark); }
+
+    /* --- HERO --- */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 8rem 2rem 5rem;
+      overflow: hidden;
+    }
+
+    .hero-glow {
+      position: absolute;
+      width: 700px; height: 700px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0,198,255,0.12) 0%, transparent 70%);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+
+    .hero-glow-2 {
+      position: absolute;
+      width: 500px; height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(126,211,33,0.08) 0%, transparent 70%);
+      top: 30%; left: 65%;
+      pointer-events: none;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--cyan);
+      margin-bottom: 1.5rem;
+      font-weight: 500;
+      animation: fadeUp 0.8s ease both;
+    }
+
+    .hero h1 {
+      font-family: 'Exo 2', sans-serif;
+      font-size: clamp(2.4rem, 6vw, 4.2rem);
+      font-weight: 700;
+      line-height: 1.15;
+      max-width: 820px;
+      margin-bottom: 1.5rem;
+      animation: fadeUp 0.8s 0.1s ease both;
+    }
+
+    .hero h1 .grad-text {
+      background: var(--grad);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      font-size: 1.1rem;
+      color: var(--muted);
+      max-width: 580px;
+      margin-bottom: 2.5rem;
+      font-weight: 300;
+      animation: fadeUp 0.8s 0.2s ease both;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      animation: fadeUp 0.8s 0.3s ease both;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      background: var(--grad);
+      color: #050b14;
+      font-family: inherit;
+      font-weight: 700;
+      font-size: 0.9rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 0.9rem 2.2rem;
+      border-radius: 4px;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+
+    .btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
+
+    .btn-ghost {
+      display: inline-block;
+      background: transparent;
+      color: var(--text);
+      font-family: inherit;
+      font-weight: 500;
+      font-size: 0.9rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 0.9rem 2.2rem;
+      border-radius: 4px;
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.2);
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .btn-ghost:hover { border-color: var(--cyan); color: var(--cyan); }
+
+    /* --- STATS --- */
+    .stats {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      justify-content: center;
+      gap: 0;
+      flex-wrap: wrap;
+      margin: 0 auto;
+      max-width: 860px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: rgba(10,22,40,0.8);
+      backdrop-filter: blur(8px);
+      animation: fadeUp 0.8s 0.4s ease both;
+    }
+
+    .stat-item {
+      flex: 1;
+      min-width: 160px;
+      padding: 2rem 2.5rem;
+      text-align: center;
+      border-right: 1px solid var(--border);
+    }
+
+    .stat-item:last-child { border-right: none; }
+
+    .stat-num {
+      font-family: 'Exo 2', sans-serif;
+      font-size: 2.4rem;
+      font-weight: 700;
+      background: var(--grad);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      display: block;
+      line-height: 1;
+      margin-bottom: 0.4rem;
+    }
+
+    .stat-label {
+      font-size: 0.78rem;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    /* --- SECTION SHARED --- */
+    section {
+      position: relative;
+      z-index: 1;
+      padding: 6rem 2rem;
+    }
+
+    .section-inner {
+      max-width: 1080px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--cyan);
+      font-weight: 500;
+      margin-bottom: 0.75rem;
+    }
+
+    .section-title {
+      font-family: 'Exo 2', sans-serif;
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      font-weight: 700;
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+
+    .section-sub {
+      color: var(--muted);
+      font-size: 1rem;
+      max-width: 560px;
+      font-weight: 300;
+      margin-bottom: 3.5rem;
+    }
+
+    /* --- SERVICES --- */
+    #services { background: var(--dark2); }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .service-card {
+      background: var(--dark3);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 2rem 1.75rem;
+      transition: border-color 0.3s, transform 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--grad);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .service-card:hover { border-color: rgba(0,198,255,0.4); transform: translateY(-3px); }
+    .service-card:hover::before { opacity: 1; }
+
+    .service-icon {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+    }
+
+    .service-title {
+      font-family: 'Exo 2', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin-bottom: 0.6rem;
+    }
+
+    .service-desc {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    /* --- ABOUT --- */
+    #about { background: var(--dark); }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .about-cred-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .about-cred-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.85rem;
+      font-size: 0.92rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .cred-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--grad);
+      background: linear-gradient(135deg, var(--cyan), var(--green));
+      flex-shrink: 0;
+      margin-top: 0.45rem;
+    }
+
+    .about-quote {
+      background: var(--dark3);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--cyan);
+      border-radius: 0 8px 8px 0;
+      padding: 2rem;
+      font-size: 1rem;
+      color: var(--text);
+      line-height: 1.75;
+      font-weight: 300;
+      font-style: italic;
+      margin-bottom: 2rem;
+    }
+
+    /* --- PRICING --- */
+    #pricing { background: var(--dark2); }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+
+    .price-card {
+      background: var(--dark3);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.75rem 1.5rem;
+      transition: border-color 0.3s;
+    }
+
+    .price-card:hover { border-color: rgba(0,198,255,0.35); }
+
+    .price-card.featured {
+      border-color: rgba(0,198,255,0.5);
+      position: relative;
+    }
+
+    .price-card.featured::before {
+      content: 'Most Popular';
+      position: absolute;
+      top: -12px; left: 50%;
+      transform: translateX(-50%);
+      background: var(--grad);
+      color: var(--dark);
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 3px 12px;
+      border-radius: 12px;
+      white-space: nowrap;
+    }
+
+    .price-type {
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--cyan);
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+    }
+
+    .price-name {
+      font-family: 'Exo 2', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.35rem;
+    }
+
+    .price-amount {
+      font-family: 'Exo 2', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.25rem;
+    }
+
+    .price-note {
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    .price-free {
+      margin-top: 2.5rem;
+      background: rgba(0,198,255,0.05);
+      border: 1px dashed rgba(0,198,255,0.3);
+      border-radius: 8px;
+      padding: 1.5rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .price-free-text { font-size: 0.95rem; color: var(--text); }
+    .price-free-text span { color: var(--cyan); font-weight: 600; }
+
+    /* --- CTA --- */
+    #contact {
+      background: var(--dark);
+      text-align: center;
+    }
+
+    .cta-box {
+      background: var(--dark3);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 4rem 3rem;
+      max-width: 680px;
+      margin: 0 auto;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-box::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at top, rgba(0,198,255,0.07), transparent 60%);
+      pointer-events: none;
+    }
+
+    .cta-box h2 {
+      font-family: 'Exo 2', sans-serif;
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .cta-box p {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-bottom: 2rem;
+      font-weight: 300;
+    }
+
+    .cta-contact-links {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+      margin-top: 2rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .cta-contact-links a {
+      color: var(--muted);
+      font-size: 0.85rem;
+      text-decoration: none;
+      transition: color 0.2s;
+      letter-spacing: 0.04em;
+    }
+
+    .cta-contact-links a:hover { color: var(--cyan); }
+
+    /* --- FOOTER --- */
+    footer {
+      position: relative;
+      z-index: 1;
+      border-top: 1px solid var(--border);
+      padding: 2rem 4rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    footer img { height: 32px; opacity: 0.7; }
+
+    .footer-text {
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    /* --- ANIMATIONS --- */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* --- RESPONSIVE --- */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+      footer { padding: 1.5rem 2rem; }
+      .stat-item { padding: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a class="nav-logo" href="#">
+      <img src="NorthernTechCurrents.png" alt="Northern Tech Currents" />
+    </a>
+    <ul class="nav-links">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#pricing">Investment</a></li>
+    </ul>
+    <a class="nav-cta" href="https://calendar.app.google/DfaYSN46wNrMQQUY8" target="_blank">Book a Free Call</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-glow"></div>
+    <div class="hero-glow-2"></div>
+    <p class="hero-eyebrow">Northern Michigan AI Training and Consulting</p>
+    <h1>Stop falling further behind.<br><span class="grad-text">Start putting AI to work.</span></h1>
+    <p class="hero-sub">Practical workshops, workflow automation, and custom AI tools for businesses and schools across northern Michigan. You leave with tools you will actually use.</p>
+    <div class="hero-actions">
+      <a class="btn-primary" href="https://calendar.app.google/DfaYSN46wNrMQQUY8" target="_blank">Book a Free 30-Minute Call</a>
+      <a class="btn-ghost" href="#services">See What I Offer</a>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div style="position:relative;z-index:1;padding:0 2rem;margin-top:-2rem;margin-bottom:5rem;">
+    <div class="stats">
+      <div class="stat-item">
+        <span class="stat-num">12+</span>
+        <span class="stat-label">Years K-12 Leadership</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">100+</span>
+        <span class="stat-label">Professionals Trained</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">10+</span>
+        <span class="stat-label">Hours Saved per Week with AI Workflows</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">1.5</span>
+        <span class="stat-label">Years Training AI for National Labs</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SERVICES -->
+  <section id="services">
+    <div class="section-inner">
+      <p class="section-label">What I offer</p>
+      <h2 class="section-title">Hands-on help, built around<br>what your team actually does</h2>
+      <p class="section-sub">No slide decks. No theory. People leave my sessions with tools they will use that make a real impact on their day.</p>
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-icon">&#9711;</div>
+          <p class="service-title">Team Workshops</p>
+          <p class="service-desc">Half or full-day sessions covering AI tools, prompting, and workflow basics. Practical and hands-on, built around what your team does every day.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">&#9654;</div>
+          <p class="service-title">Workflow Automation</p>
+          <p class="service-desc">Identify and build AI-powered workflows that save real time across document handling, scheduling, communication, and more.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">&#9670;</div>
+          <p class="service-title">AI Agents and Custom Tools</p>
+          <p class="service-desc">Purpose-built AI agents and tools designed around your specific processes. Not off-the-shelf, not generic.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">&#9675;</div>
+          <p class="service-title">1-on-1 Coaching</p>
+          <p class="service-desc">Individual sessions tailored to your role covering prompting, tool selection, and building your own AI-assisted workflows.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="section-inner">
+      <div class="about-grid">
+        <div>
+          <p class="section-label">About Mike Ehinger</p>
+          <h2 class="section-title">Built on real experience,<br>not just credentials</h2>
+          <p class="section-sub" style="margin-bottom:1.5rem;">I am a northern Michigan educator who has spent 12+ years leading school districts and the past year and a half training AI for leading national labs. I know what it takes to actually implement technology in organizations that have to keep running while change is happening.</p>
+          <ul class="about-cred-list">
+            <li><span class="cred-dot"></span>12+ years K-12 leadership in Michigan: superintendent, COO, principal</li>
+            <li><span class="cred-dot"></span>AI trainer for leading national AI labs via Mercor Intelligence</li>
+            <li><span class="cred-dot"></span>Workshop presenter at MASA state conference on AI in education</li>
+            <li><span class="cred-dot"></span>Trained 100+ professionals on practical AI adoption</li>
+            <li><span class="cred-dot"></span>Builds AI agents, automations, and custom tools for real-world use</li>
+            <li><span class="cred-dot"></span>Active classroom teacher, math and science grades 6-12 at Oscoda Area Schools</li>
+          </ul>
+        </div>
+        <div>
+          <p class="about-quote">The gap between teams using AI effectively and teams not using it at all is growing. That gap has real consequences. For most organizations it is not about willingness. It is about not knowing where to start, or not having someone who can translate the technology into something that actually fits how they work.</p>
+          <p style="font-size:0.88rem;color:var(--muted);margin-bottom:2rem;">For schools, I understand the added layer. Protecting student data is not a roadblock. It is the right instinct, and it shapes how I approach every engagement in that environment.</p>
+          <a class="btn-primary" href="https://calendar.app.google/DfaYSN46wNrMQQUY8" target="_blank">Book a Free Intro Call</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section id="pricing">
+    <div class="section-inner">
+      <p class="section-label">Investment</p>
+      <h2 class="section-title">Straightforward pricing for<br>northern Michigan budgets</h2>
+      <p class="section-sub">Every engagement starts with a free 30-minute call so we can make sure the fit is right before committing to anything.</p>
+      <div class="pricing-grid">
+        <div class="price-card">
+          <p class="price-type">Workshop</p>
+          <p class="price-name">Half-Day (up to 15)</p>
+          <p class="price-amount">$350-500</p>
+          <p class="price-note">3-4 hours, hands-on</p>
+        </div>
+        <div class="price-card featured">
+          <p class="price-type">Workshop</p>
+          <p class="price-name">Full-Day</p>
+          <p class="price-amount">$700-900</p>
+          <p class="price-note">Full team, deep dive</p>
+        </div>
+        <div class="price-card">
+          <p class="price-type">Consulting</p>
+          <p class="price-name">Workflow Consult</p>
+          <p class="price-amount">$200</p>
+          <p class="price-note">2-hour session</p>
+        </div>
+        <div class="price-card">
+          <p class="price-type">Coaching</p>
+          <p class="price-name">1-on-1 Hourly</p>
+          <p class="price-amount">$85-100</p>
+          <p class="price-note">Per hour</p>
+        </div>
+      </div>
+      <div class="price-free">
+        <p class="price-free-text"><span>Free intro session available.</span> Not sure where to start? Book a 30-minute call at no cost. No pitch, no pressure.</p>
+        <a class="btn-primary" href="https://calendar.app.google/DfaYSN46wNrMQQUY8" target="_blank">Book Now</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section id="contact">
+    <div class="section-inner">
+      <div class="cta-box">
+        <h2>Ready to close the gap?</h2>
+        <p>Book a free 30-minute intro call. We will talk through where your team is, what would actually help, and whether working together makes sense.</p>
+        <a class="btn-primary" href="https://calendar.app.google/DfaYSN46wNrMQQUY8" target="_blank">Book a Free Call</a>
+        <div class="cta-contact-links">
+          <a href="tel:9897870260">989-787-0260</a>
+          <a href="https://www.LinkedIn.com/in/Mike-Ehinger" target="_blank">linkedin.com/in/Mike-Ehinger</a>
+          <a href="https://NorthernTechCurrents.Net">NorthernTechCurrents.Net</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <img src="NorthernTechCurrents.png" alt="Northern Tech Currents" />
+    <p class="footer-text">Northern Tech Currents &nbsp;|&nbsp; Northern Michigan &nbsp;|&nbsp; 989-787-0260</p>
+  </footer>
+
+</body>
+</html>
