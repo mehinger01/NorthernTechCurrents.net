@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Free Revenue Leak Audit | Northern Tech Currents</title>
+  <meta name="description" content="Find out where your small business is silently losing time, leads, and repeat customers. Free audit from Northern Tech Currents." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --dark:   #030a12;
+      --dark2:  #071220;
+      --dark3:  #0c1e35;
+      --blue:   #1a7fff;
+      --cyan:   #00c6ff;
+      --cyan2:  #0099cc;
+      --cyan3:  #006a99;
+      --green:  #7ed321;
+      --text:   #e8f0fe;
+      --muted:  #8aa8cc;
+      --border: rgba(0,198,255,0.18);
+      --grad:   linear-gradient(135deg, #00c6ff 0%, #1a7fff 100%);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--dark);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── Background texture ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0,198,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,198,255,0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── Top accent bar ── */
+    .top-bar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--grad);
+      z-index: 100;
+    }
+
+    /* ── Nav strip ── */
+    .nav {
+      position: relative;
+      z-index: 10;
+      padding: 1.4rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .brand {
+      font-family: 'Exo 2', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--cyan);
+    }
+    .nav-phone {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+    }
+    .nav-phone a { color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .nav-phone a:hover { color: var(--cyan); }
+
+    /* ── Main layout ── */
+    main {
+      position: relative;
+      z-index: 1;
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 1rem 2rem 4rem;
+    }
+
+    /* ── Eyebrow ── */
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: 'Exo 2', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--cyan);
+      margin-bottom: 1.4rem;
+      opacity: 0;
+      animation: fadeUp 0.6s 0.1s ease forwards;
+    }
+    .eyebrow::before {
+      content: '';
+      display: block;
+      width: 28px; height: 2px;
+      background: var(--cyan);
+      border-radius: 2px;
+    }
+
+    /* ── Hero headline ── */
+    .headline {
+      font-family: 'Exo 2', sans-serif;
+      font-size: clamp(2.1rem, 5vw, 3.2rem);
+      font-weight: 800;
+      line-height: 1.1;
+      color: #fff;
+      margin-bottom: 1.2rem;
+      opacity: 0;
+      animation: fadeUp 0.6s 0.2s ease forwards;
+    }
+    .headline em {
+      font-style: normal;
+      background: var(--grad);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ── Subhead ── */
+    .subhead {
+      font-size: 17px;
+      color: #c0d8f0;
+      line-height: 1.7;
+      max-width: 600px;
+      margin-bottom: 2.2rem;
+      opacity: 0;
+      animation: fadeUp 0.6s 0.3s ease forwards;
+    }
+
+    /* ── Two-column layout ── */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: start;
+      opacity: 0;
+      animation: fadeUp 0.6s 0.4s ease forwards;
+    }
+    @media (max-width: 680px) {
+      .two-col { grid-template-columns: 1fr; gap: 2rem; }
+    }
+
+    /* ── Left: What you'll discover ── */
+    .discover-label {
+      font-family: 'Exo 2', sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--cyan);
+      margin-bottom: 1rem;
+    }
+    .discover-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+      margin-bottom: 1.8rem;
+    }
+    .discover-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      font-size: 14px;
+      color: #c0d8f0;
+      line-height: 1.55;
+    }
+    .discover-list li::before {
+      content: '';
+      flex-shrink: 0;
+      width: 18px; height: 18px;
+      margin-top: 1px;
+      border-radius: 50%;
+      background: rgba(0,198,255,0.12);
+      border: 1px solid rgba(0,198,255,0.4);
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2 6l3 3 5-5' stroke='%2300c6ff' stroke-width='1.8' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 10px;
+    }
+
+    /* Section preview pills */
+    .section-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.8rem;
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.35rem 0.75rem;
+      background: var(--dark3);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      font-family: 'Exo 2', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+    }
+    .pill-num {
+      color: var(--cyan);
+      font-size: 10px;
+    }
+
+    /* Credibility strip */
+    .cred-strip {
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+    }
+    .cred-item {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .cred-dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--green);
+      flex-shrink: 0;
+    }
+
+    /* ── Right: Capture form card ── */
+    .form-card {
+      background: var(--dark2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2rem 1.8rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .form-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--grad);
+    }
+    .form-title {
+      font-family: 'Exo 2', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.4rem;
+    }
+    .form-sub {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 1.4rem;
+      line-height: 1.5;
+    }
+
+    /* ─── FORM INTEGRATION NOTE ───────────────────────────────────────────
+       When you set up Mailchimp:
+       1. Create a new Audience (if you haven't already)
+       2. Go to Audience > Signup forms > Embedded forms
+       3. Copy ONLY the action URL from the form code (looks like:
+          https://yourdomain.us1.list-manage.com/subscribe/post?u=xxx&id=xxx)
+       4. Paste that URL into the form's action attribute below
+       5. The input name "EMAIL" matches Mailchimp's expected field name
+       ──────────────────────────────────────────────────────────────────── -->
+
+    /* ─── Form styles ── */
+    /* NOTE: Replace action="#" with your Mailchimp form action URL */
+    .capture-form { display: flex; flex-direction: column; gap: 0.75rem; }
+
+    .field-group { display: flex; flex-direction: column; gap: 0.35rem; }
+    .field-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .field-input {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      background: var(--dark3);
+      border: 1px solid rgba(0,198,255,0.2);
+      border-radius: 6px;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .field-input::placeholder { color: rgba(138,168,204,0.5); }
+    .field-input:focus {
+      border-color: var(--cyan);
+      box-shadow: 0 0 0 3px rgba(0,198,255,0.1);
+    }
+
+    .btn-submit {
+      width: 100%;
+      padding: 0.9rem 1.5rem;
+      background: linear-gradient(180deg, #2ecfff 0%, #0ea5d8 35%, #0778a8 100%);
+      border: none;
+      border-radius: 6px;
+      font-family: 'Exo 2', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      color: var(--dark);
+      cursor: pointer;
+      margin-top: 0.25rem;
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.3),
+        0 4px 0 #055a7a,
+        0 6px 14px rgba(0,0,0,0.4);
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .btn-submit:hover {
+      transform: translateY(2px);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.25),
+        0 2px 0 #055a7a,
+        0 4px 10px rgba(0,0,0,0.4);
+    }
+    .btn-submit:active { transform: translateY(4px); box-shadow: none; }
+
+    .form-note {
+      font-size: 11px;
+      color: rgba(138,168,204,0.6);
+      text-align: center;
+      line-height: 1.5;
+      margin-top: 0.25rem;
+    }
+
+    /* ── Divider ── */
+    .section-divider {
+      border: none;
+      border-top: 1px solid rgba(0,198,255,0.1);
+      margin: 3rem 0;
+    }
+
+    /* ── Leak preview section ── */
+    .preview-label {
+      font-family: 'Exo 2', sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--cyan);
+      margin-bottom: 0.6rem;
+    }
+    .preview-heading {
+      font-family: 'Exo 2', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.6rem;
+    }
+    .preview-sub {
+      font-size: 15px;
+      color: var(--muted);
+      max-width: 560px;
+      line-height: 1.65;
+      margin-bottom: 2rem;
+    }
+
+    .leak-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1rem;
+    }
+    .leak-card {
+      background: var(--dark2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.25rem 1.25rem 1rem;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.25s, transform 0.25s;
+    }
+    .leak-card:hover {
+      border-color: rgba(0,198,255,0.4);
+      transform: translateY(-2px);
+    }
+    .leak-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--grad);
+      opacity: 0;
+      transition: opacity 0.25s;
+    }
+    .leak-card:hover::after { opacity: 1; }
+    .leak-num {
+      font-family: 'Exo 2', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--cyan);
+      letter-spacing: 0.12em;
+      margin-bottom: 0.4rem;
+    }
+    .leak-title {
+      font-family: 'Exo 2', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.4rem;
+    }
+    .leak-teaser {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    /* ── About strip ── */
+    .about-strip {
+      margin-top: 3rem;
+      background: var(--dark2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.6rem 1.8rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.6s 0.6s ease forwards;
+    }
+    @media (max-width: 540px) { .about-strip { flex-direction: column; } }
+    .about-avatar {
+      flex-shrink: 0;
+      width: 56px; height: 56px;
+      border-radius: 50%;
+      background: var(--dark3);
+      border: 2px solid var(--cyan);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Exo 2', sans-serif;
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--cyan);
+    }
+    .about-body {}
+    .about-name {
+      font-family: 'Exo 2', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.2rem;
+    }
+    .about-role {
+      font-family: 'Exo 2', sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--cyan);
+      margin-bottom: 0.6rem;
+    }
+    .about-text {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    .about-text strong { color: #c0d8f0; }
+
+    /* ── Footer ── */
+    footer {
+      position: relative; z-index: 1;
+      padding: 1.5rem 2rem;
+      text-align: center;
+      border-top: 1px solid rgba(0,198,255,0.08);
+    }
+    footer p {
+      font-size: 12px;
+      color: rgba(138,168,204,0.5);
+    }
+    footer a { color: var(--muted); text-decoration: none; }
+    footer a:hover { color: var(--cyan); }
+
+    /* ── Animations ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Success state (shown after form submit) ── */
+    .success-message {
+      display: none;
+      text-align: center;
+      padding: 1.5rem;
+    }
+    .success-message.visible { display: block; }
+    .success-icon {
+      width: 52px; height: 52px;
+      border-radius: 50%;
+      background: rgba(126,211,33,0.12);
+      border: 2px solid var(--green);
+      margin: 0 auto 1rem;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px;
+    }
+    .success-title {
+      font-family: 'Exo 2', sans-serif;
+      font-size: 17px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.5rem;
+    }
+    .success-body { font-size: 13px; color: var(--muted); line-height: 1.6; }
+  </style>
+</head>
+
+<body>
+  <div class="top-bar"></div>
+
+  <!-- Nav -->
+  <nav class="nav">
+    <span class="brand">Northern Tech Currents</span>
+    <span class="nav-phone"><a href="tel:9897870260">989-787-0260</a></span>
+  </nav>
+
+  <main>
+    <!-- Eyebrow -->
+    <div class="eyebrow">Free Business Audit &mdash; Northern Michigan</div>
+
+    <!-- Headline -->
+    <h1 class="headline">
+      Is Your Business<br/>
+      <em>Leaking Revenue</em><br/>
+      Without Knowing It?
+    </h1>
+
+    <!-- Subhead -->
+    <p class="subhead">
+      Most small businesses don't lose money from one big mistake.
+      They lose it quietly&mdash;missed follow-ups, forgotten customers, and hours spent on tasks that could be automated.
+      This free audit helps you find out exactly where.
+    </p>
+
+    <!-- Two-column: left = value props, right = form -->
+    <div class="two-col">
+
+      <!-- Left column -->
+      <div class="left-col">
+        <p class="discover-label">What you'll discover</p>
+        <ul class="discover-list">
+          <li>Why slow follow-up is silently costing you leads&nbsp;every&nbsp;week</li>
+          <li>Where past customers are slipping away&mdash;and how to get them back</li>
+          <li>Which daily tasks are draining hours that could grow your business</li>
+          <li>Whether your business is actually visible when customers are looking</li>
+          <li>What your own data is trying to tell you&mdash;that nobody is listening to</li>
+        </ul>
+
+        <p class="discover-label">What's inside</p>
+        <div class="section-pills">
+          <span class="pill"><span class="pill-num">01</span> Customer Response</span>
+          <span class="pill"><span class="pill-num">02</span> Repeat Business</span>
+          <span class="pill"><span class="pill-num">03</span> Communication Time</span>
+          <span class="pill"><span class="pill-num">04</span> Visibility &amp; Marketing</span>
+          <span class="pill"><span class="pill-num">05</span> Operational Blind Spots</span>
+        </div>
+
+        <div class="cred-strip">
+          <div class="cred-item"><span class="cred-dot"></span>Built for Ogemaw, Arenac &amp; Iosco County businesses</div>
+          <div class="cred-item"><span class="cred-dot"></span>100+ Michigan professionals trained on practical AI</div>
+          <div class="cred-item"><span class="cred-dot"></span>12+ years K&ndash;12 leadership &amp; operations in Michigan</div>
+          <div class="cred-item"><span class="cred-dot"></span>No pitch. No pressure. Just the audit.</div>
+        </div>
+      </div>
+
+      <!-- Right column: Form card -->
+      <div class="right-col">
+        <div class="form-card">
+          <h2 class="form-title">Get the Free Audit</h2>
+          <p class="form-sub">Takes about 10 minutes. You'll know exactly where to focus first.</p>
+
+          <!--
+            ================================================================
+            MAILCHIMP INTEGRATION
+            ================================================================
+            When your Mailchimp account is ready:
+            1. Go to Audience > Signup forms > Embedded forms
+            2. Copy the form action URL (starts with https://...list-manage.com/subscribe/post)
+            3. Replace action="#" below with that URL
+            4. Keep method="post" and the hidden input tags Mailchimp provides
+            5. The EMAIL and FNAME field names already match Mailchimp defaults
+            ================================================================
+          -->
+          <form
+            class="capture-form"
+            action="#"
+            method="post"
+            id="capture-form"
+            target="_blank"
+          >
+            <!-- Mailchimp requires this hidden field - add your u= and id= values -->
+            <!-- <input type="hidden" name="u" value="YOUR_U_VALUE"> -->
+            <!-- <input type="hidden" name="id" value="YOUR_LIST_ID"> -->
+
+            <div class="field-group">
+              <label class="field-label" for="fname">First Name</label>
+              <input
+                class="field-input"
+                type="text"
+                id="fname"
+                name="FNAME"
+                placeholder="Your first name"
+                required
+              />
+            </div>
+
+            <div class="field-group">
+              <label class="field-label" for="email">Business Email</label>
+              <input
+                class="field-input"
+                type="email"
+                id="email"
+                name="EMAIL"
+                placeholder="you@yourbusiness.com"
+                required
+              />
+            </div>
+
+            <button type="submit" class="btn-submit">
+              Send Me the Free Audit &rarr;
+            </button>
+
+            <p class="form-note">
+              No spam. Unsubscribe any time.<br/>
+              Your email stays private and is never sold.
+            </p>
+          </form>
+
+          <!-- Success state: shown after Mailchimp redirect or JS confirmation -->
+          <div class="success-message" id="success-msg">
+            <div class="success-icon">&#10003;</div>
+            <p class="success-title">Check your inbox.</p>
+            <p class="success-body">
+              The Revenue Leak Audit is on its way. If you don't see it in a few minutes, check your spam folder.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Divider -->
+    <hr class="section-divider" />
+
+    <!-- Section previews -->
+    <p class="preview-label">A Closer Look</p>
+    <h2 class="preview-heading">Five Places Businesses Quietly Lose Money</h2>
+    <p class="preview-sub">
+      Each section of the audit focuses on a different area where real revenue slips away.
+      The audit gives you a scorecard so you know which one to fix first.
+    </p>
+
+    <div class="leak-grid">
+      <div class="leak-card">
+        <div class="leak-num">01 &mdash; CUSTOMER RESPONSE</div>
+        <div class="leak-title">The Friday Afternoon Problem</div>
+        <p class="leak-teaser">
+          If a quote request sits until Monday morning, the odds are high that customer already called someone else.
+        </p>
+      </div>
+      <div class="leak-card">
+        <div class="leak-num">02 &mdash; REPEAT BUSINESS</div>
+        <div class="leak-title">The Customers You Forgot You Had</div>
+        <p class="leak-teaser">
+          Most businesses spend heavily to get new customers while ignoring people who already trust them.
+        </p>
+      </div>
+      <div class="leak-card">
+        <div class="leak-num">03 &mdash; COMMUNICATION TIME</div>
+        <div class="leak-title">The Tasks Nobody Notices</div>
+        <p class="leak-teaser">
+          Rewriting the same emails, answering the same questions. Individually small. Collectively massive.
+        </p>
+      </div>
+      <div class="leak-card">
+        <div class="leak-num">04 &mdash; VISIBILITY</div>
+        <div class="leak-title">"We're Good. People Just Don't Know."</div>
+        <p class="leak-teaser">
+          In small communities, it's easy to assume word of mouth handles everything. Sometimes it doesn't.
+        </p>
+      </div>
+      <div class="leak-card">
+        <div class="leak-num">05 &mdash; BLIND SPOTS</div>
+        <div class="leak-title">Working Hard in the Dark</div>
+        <p class="leak-teaser">
+          Most businesses have the data they need to make better decisions. It's just sitting there, unused.
+        </p>
+      </div>
+    </div>
+
+    <!-- About Mike strip -->
+    <div class="about-strip">
+      <div class="about-avatar">ME</div>
+      <div class="about-body">
+        <div class="about-name">Mike Ehinger</div>
+        <div class="about-role">AI Consultant &amp; Trainer &middot; Northern Michigan</div>
+        <p class="about-text">
+          I've spent 12+ years leading operations across Michigan schools and organizations,
+          and I now train AI models for national AI labs. I build practical AI workflows that
+          save real businesses real time&mdash;starting with knowing <strong>where the leaks actually are.</strong>
+          Based in <strong>northern Michigan</strong>. Available when you have questions.
+        </p>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>
+      Northern Tech Currents &nbsp;&middot;&nbsp;
+      <a href="tel:9897870260">989-787-0260</a> &nbsp;&middot;&nbsp;
+      <a href="https://NorthernTechCurrents.Net">NorthernTechCurrents.Net</a>
+    </p>
+  </footer>
+
+  <script>
+    // Basic form UX: if the form action is still "#" (not yet connected to Mailchimp),
+    // show a temporary placeholder message instead of navigating away.
+    // Once you add your Mailchimp action URL, this block is no longer needed.
+    document.getElementById('capture-form').addEventListener('submit', function(e) {
+      const action = this.getAttribute('action');
+      if (action === '#') {
+        e.preventDefault();
+        this.style.display = 'none';
+        document.getElementById('success-msg').classList.add('visible');
+      }
+      // If action has a real Mailchimp URL, the form submits normally to Mailchimp.
+    });
+  </script>
+</body>
+</html>
